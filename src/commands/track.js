@@ -65,7 +65,6 @@ for (let i = 0; i < datasets.length; i++) {
                 if (defaultDate === 'TODAYS_DATE') {
                     defaultDate = getTodaysDate();
                 }
-                // subCommand.option(currentField.param, `Optional argument. (${currentConfig.dateFormat})`, (value) => inputDateValidator(value), defaultDate);
                 subCommand.option(`${currentField.param}, [${currentField.id}]`, `Optional Argument. (${currentConfig.dateFormat})`, (value) => inputDateValidator(value), defaultDate);
             } else if (currentField.type === 'flag') {
                 subCommand.option(`${currentField.param}, [${currentField.id}]`, 'Optional argument.', currentField.default);
@@ -102,20 +101,7 @@ for (let i = 0; i < datasets.length; i++) {
         if (JSON.stringify(relation) !== '{}') {
             let mappedValue = relation.values.find((obj) => obj.many === record[relation.many]).one;
             let tempOneValue = record[relation.one];
-            // if (mappedValue !== "Unknown") {
-            //     if (!record[relation.one]) {
-            //         record[relation.one] = mappedValue;
-            //     } else {
-            //         console.log(tempOneValue);
-            //         // todo: allow user to confirm if they want to use that 'one' value as it's different than the preset mapped value
-            //         let message = `This ${relation.many} has already been mapped to '${mappedValue}'. Override? `;
-            //         const overrideMapping = await confirmPrompt(message);
-            //         if (overrideMapping.confirm) {
-            //             record[relation.one] = tempOneValue;
-            //         } else {
-            //             record[relation.one] = mappedValue;
-            //         }
-            //     }
+
             if (mappedValue === "Unknown") {
                 const addMapping = await confirmPrompt(`Would you like to map '${record[relation.many]}' to a new '${relation.one}?: '`);
                 if (addMapping.confirm) {

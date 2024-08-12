@@ -18,7 +18,6 @@ function generateReport(dates, filename, fields=[]) {
     let results = [];
     let outputFileName = `Tracker ${capitalizeFirstLetter(filename)} Report`;
 
-    // remove to get previously working generate command
     let startDate = undefined;
     let endDate = undefined;
     console.log(dates);
@@ -30,33 +29,19 @@ function generateReport(dates, filename, fields=[]) {
 
     let datasets = getDatasets();
 
-    // console.log(filename);
     let currentReqDataset = datasets.find((item) => item.filename === filename);
-    // console.log(currentReqDataset);
+
     let filterableDateFieldId = getFilterableDateField(currentReqDataset.fields);
-
-    // remove
-
 
     fs.createReadStream(currentReqDataset.paths.dataset)
         .pipe(csv())
         .on('data', (data) => {
-            // todo: handle datasets that don't have a filterable date field
-            // uncomment to get back to previously working generate command
-            // need to change only the next 2 lines of code and add a condition
-            // const date = moment(data.Date, currentConfig.dateFormat, true);
-            // let withinFilter = date.isBetween(startDate, endDate, undefined, '[]');
-            // todo: use filename to get the dataset and then check if the date field is filterable (also needed to get the field id for the date field)
-            // let datasets = getDatasets();
-            // let currDataset = datasets.find((item) => item.filename === filename);
-            // if (!currDataset)
             let withinFilter = true;
             if (filterableDateFieldId) {
                 const date = moment(data[filterableDateFieldId], currentConfig.dateFormat, true);
                 withinFilter = date.isBetween(startDate, endDate, undefined, '[]');
             }
-            //
-            // uncomment
+            
             for (let i = 0; i < fields.length; i++) {
                 if (data[fields[i].field] !== fields[i].value) {
                     withinFilter = false;
@@ -87,14 +72,6 @@ let datasets = getDatasets();
 for (let i = 0; i < datasets.length; i++) {
     let currentDataset = datasets[i];
     let subCommand = new Command(currentDataset.filename);
-    // todo: only allow date filtering if there is a date field that the user has allowed filtering on
-
-    // uncomment the following 2 lines to get back to previously working generate command
-
-    // subCommand.option('-s, --start, [start]', "Specify a start date for filtering. Defaults to today's date one year ago.", (value) => inputDateValidator(value), getDateOneYearAgo())
-    // subCommand.option('-e, --end, [end]', "Specify an end date for filtering. Defaults to today's date.", (value) => inputDateValidator(value), getTodaysDate())
-    
-    // uncomment
 
     for (let j = 0; j < currentDataset.fields.length; j++) {
         let currentField = currentDataset.fields[j];
@@ -109,18 +86,15 @@ for (let i = 0; i < datasets.length; i++) {
                     process.exit(1);
                 }
             });
-        // remove the following code to get back to previously working generate command
         } else if (currentField.type === 'date' && currentField.filterable) {
             subCommand.option('-s, --start, [start]', "Specify a start date for filtering. Defaults to today's date one year ago.", (value) => inputDateValidator(value), getDateOneYearAgo())
             subCommand.option('-e, --end, [end]', "Specify an end date for filtering. Defaults to today's date.", (value) => inputDateValidator(value), getTodaysDate())
-        // remove
         }
     }
     subCommand.action((options) => {
         console.log(options);
         let dates = undefined;
         let { start, end, ...filters } = options;
-        // remove the following code to get back to previously working generate command
         if (start || end) {
             if (!checkStartBeforeEnd(start, end)) {
                 console.error('Start date entered is after the end date entered. Enter valid values or omit them for default values.');
@@ -131,7 +105,6 @@ for (let i = 0; i < datasets.length; i++) {
                 end: end
             };
         }
-        // remove
         let fields = [];
         Object.keys(filters).forEach((key) => fields.push({field: capitalizeFirstLetter(key), value: filters[key]}));
         generateReport(dates, currentDataset.filename, fields);

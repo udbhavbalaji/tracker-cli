@@ -9,6 +9,7 @@ import { addToCommand } from "../src/commands/addTo.js";
 import { trackCommand } from "../src/commands/track.js";
 import { generateCommand } from "../src/commands/generate.js";
 import { showCommand } from "../src/commands/show.js";
+import { deleteCommand } from "../src/commands/delete.js";
 
 
 const currentConfig = loadConfig();
@@ -29,6 +30,7 @@ if (Object.keys(currentConfig).length === 0) {
     program.addCommand(addToCommand);
     program.addCommand(trackCommand);
     program.addCommand(generateCommand);
+    program.addCommand(deleteCommand)
 }
 
 program.parse(process.argv);

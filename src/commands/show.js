@@ -101,6 +101,14 @@ showCommand.command('last')
         let reqDataset = datasets.find((item) => item.command === dataset);
 
         fs.createReadStream(reqDataset.paths.dataset)
+            .on('error', (err) => {
+                if (err.code === 'ENOENT') {
+                    console.error(`No data exists for this dataset. Use 'tracker track <${dataset}>' to add records to this dataset.`);
+                    process.exit(1);
+                } else {
+                    console.error(err.message);
+                }
+            })
             .pipe(csv())
             .on('data', (data) => {
                 requiredRecords.push(data);

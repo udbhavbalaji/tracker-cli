@@ -20,7 +20,7 @@ function generateReport(dates, filename, fields=[]) {
 
     let startDate = undefined;
     let endDate = undefined;
-    console.log(dates);
+
     if (dates) {
         startDate = moment(dates.start, currentConfig.dateFormat, true);
         endDate = moment(dates.end, currentConfig.dateFormat, true);
@@ -92,7 +92,6 @@ for (let i = 0; i < datasets.length; i++) {
         }
     }
     subCommand.action((options) => {
-        console.log(options);
         let dates = undefined;
         let { start, end, ...filters } = options;
         if (start || end) {

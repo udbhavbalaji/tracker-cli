@@ -32,7 +32,6 @@ showCommand.command('fields')
     .option('-d, <dataset>', 'The dataset name that you want the field for.', (value) => inputDatasetValidator(value))
     .option('-i, --info, [info]', 'Flag indicating to show info of fields in the dataset.', false)
     .action((options) => {
-        console.log(options);
         let reqDatasetName = options.d;
         if (!reqDatasetName) {
             console.error("Please enter a dataset with the '-d' option.");

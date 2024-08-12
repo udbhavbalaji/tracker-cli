@@ -1,0 +1,22 @@
+{
+  "name": "tracker-cli",
+  "version": "1.0.0",
+  "description": "This tool helps track transactions, with the ability to generate summarized reports, all from the command line.",
+  "main": "tracker.js",
+  "bin": {
+    "tracker": "./bin/tracker.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
+    "inquirer": "^10.1.8",
+    "moment": "^2.30.1"
+  }
+}

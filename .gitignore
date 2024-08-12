@@ -132,3 +132,4 @@ dist
 # Adding customn files to be ignored
 test.js
 .vscode/
+generateOld.js

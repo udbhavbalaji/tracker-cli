@@ -1,8 +1,9 @@
-import { confirmPrompt, initialDatasetFieldsPrompt, secondaryDatasetFieldsPrompt } from "./prompts.js";
-import { loadConfig } from "../config/config.js";
 import moment from "moment";
 import path from 'path';
 import fs from 'fs';
+import { checkPermissionError } from "./configUtils.js";
+import { confirmPrompt, initialDatasetFieldsPrompt, secondaryDatasetFieldsPrompt } from "./prompts.js";
+import { loadConfig } from "../config/config.js";
 
 
 export async function getDatasetFields(numFields) {

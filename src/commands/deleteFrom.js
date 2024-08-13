@@ -3,7 +3,7 @@ import csv from 'csv-parser';
 import { Command } from "commander";
 import { createObjectCsvWriter } from 'csv-writer';
 
-import { getDatasets } from '../utils/commandUtils.js';
+import { findDataset, getDatasets } from '../utils/commandUtils.js';
 import { confirmPrompt } from '../utils/prompts.js';
 import { inputDatasetValidator } from '../utils/validators.js';
 
@@ -14,8 +14,7 @@ const deleteFromCommand = new Command('delete-from')
 
 
 async function deleteRecord(dataset) {
-    let datasets = getDatasets();
-    let reqDataset = datasets.find((item) => item.command === dataset);
+    let reqDataset = findDataset(dataset);
     let records = [];
 
     fs.createReadStream(reqDataset.paths.dataset)

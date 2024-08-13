@@ -181,3 +181,9 @@ export function getFilterableDateField(fields) {
     }
     return false;
 }
+
+
+export function findDataset(datasetName) {
+    let datasets = getDatasets();
+    return datasets.find((item) => item.command === datasetName);
+}

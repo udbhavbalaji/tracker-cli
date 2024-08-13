@@ -2,7 +2,7 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { Command } from "commander";
 import { loadConfig } from "../config/config.js";
-import { getDatasets, getRelationships } from "../utils/commandUtils.js";
+import { findDataset, getDatasets, getRelationships } from "../utils/commandUtils.js";
 import { inputDatasetValidator, defaultNumberValidator } from "../utils/validators.js";
 
 
@@ -59,8 +59,7 @@ showCommand.command('fields')
             console.error("Please enter a dataset with the '-d' option.");
             process.exit(1);
         }
-        let datasets = getDatasets();
-        let reqDataset = datasets.find((item) => item.command === reqDatasetName);
+        let reqDataset = findDataset(reqDatasetName);
         console.log('');
         reqDataset.fields.forEach((item) => {
             if (options.info) {
@@ -86,8 +85,7 @@ showCommand.command('valid-values')
             console.error('Missing required option -f, --field.');
             process.exit(1);
         }
-        let datasets = getDatasets();
-        let reqDataset = datasets.find((item) => item.command === options.dataset);
+        let reqDataset = findDataset(options.dataset);
         let reqField = reqDataset.fields.find((item) => item.id === options.field);
         if (!reqField) {
             console.error("Field doesn't exist in requested dataset.");
@@ -121,8 +119,7 @@ showCommand.command('last')
     .argument('<dataset>', "Specify the dataset whose transactions you want to see.", (value) => inputDatasetValidator(value))
     .action((num, dataset) => {
         let requiredRecords = [];
-        let datasets = getDatasets();
-        let reqDataset = datasets.find((item) => item.command === dataset);
+        let reqDataset = findDataset(dataset);
 
         fs.createReadStream(reqDataset.paths.dataset)
             .on('error', (err) => {
@@ -150,8 +147,7 @@ showCommand.command('last')
         .description("Shows the relation mappings that have been defined for a dataset.")
         .argument('<dataset>', "Specify the dataset whose relation mappings you want to see.", (value) => inputDatasetValidator(value))
         .action((dataset) => {
-            let datasets = getDatasets();
-            let reqDataset = datasets.find((item) => item.command === dataset);
+            let reqDataset = findDataset(dataset);
             let relations = getRelationships(reqDataset.paths.resources);
             if (JSON.stringify(relations) === '{}') {
                 console.error("This dataset doesn't have a relation set up!");

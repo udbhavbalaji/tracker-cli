@@ -1,6 +1,6 @@
 import { Command } from "commander";
 
-import { getDatasets, writeDatasets, getRelationships, addValidValue, writeRelationships, addRelation } from "../utils/commandUtils.js";
+import { getDatasets, writeDatasets, getRelationships, addValidValue, writeRelationships, addRelation, findDataset } from "../utils/commandUtils.js";
 import { inputDatasetValidator } from "../utils/validators.js";
 import { mappedValuePrompt } from "../utils/prompts.js";
 
@@ -34,8 +34,7 @@ addToCommand.argument('<dataset>', 'The dataset to which to the requested field 
     .argument('<field>', 'The field to which the value is being added.')
     .argument('<value>', "Value requested to be added to the requested fields' valid values.")
     .action((dataset, field, value) => {
-        let datasets = getDatasets();
-        let requestedDataset = datasets.find((item) => item.command === dataset);
+        let requestedDataset = findDataset(dataset);
         let currentField = requestedDataset.fields.find((item) => item.id === field);
         if (!currentField) {
             console.error('Requested field does not exist in this dataset.');

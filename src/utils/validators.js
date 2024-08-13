@@ -1,7 +1,7 @@
 import moment from "moment";
 
 import { loadConfig } from "../config/config.js";
-import { getDatasets } from "./commandUtils.js";
+import { findDataset, getDatasets } from "./commandUtils.js";
 
 
 export function defaultDateValidator(value) {
@@ -27,8 +27,7 @@ export function defaultNumberValidator(value) {
 
 
 export function inputDatasetValidator(command) {
-    let datasets = getDatasets();
-    if (datasets.find((item) => item.command === command)) {
+    if (findDataset(command)) {
         return command;
     } else {
         console.error('Requested dataset does not exist.');

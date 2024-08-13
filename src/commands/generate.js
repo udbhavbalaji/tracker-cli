@@ -6,7 +6,7 @@ import { Command } from "commander";
 import { createObjectCsvWriter } from "csv-writer";
 
 import { loadConfig } from "../config/config.js";
-import { capitalizeFirstLetter, getDateOneYearAgo, checkStartBeforeEnd, getDatasets, getTodaysDate, getFilterableDateField } from "../utils/commandUtils.js";
+import { capitalizeFirstLetter, getDateOneYearAgo, checkStartBeforeEnd, getDatasets, getTodaysDate, getFilterableDateField, findDataset } from "../utils/commandUtils.js";
 import { inputDateValidator, inputEnumValidator } from "../utils/validators.js";
 
 
@@ -31,7 +31,6 @@ function generateReport(dates, filename, fields=[]) {
     }
 
     let datasets = getDatasets();
-
     let currentReqDataset = datasets.find((item) => item.filename === filename);
 
     let filterableDateFieldId = getFilterableDateField(currentReqDataset.fields);

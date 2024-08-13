@@ -1,9 +1,12 @@
 import { Command } from "commander";
+
 import { getDatasets, writeDatasets, getRelationships, addValidValue, writeRelationships, addRelation } from "../utils/commandUtils.js";
 import { inputDatasetValidator } from "../utils/validators.js";
 import { mappedValuePrompt } from "../utils/prompts.js";
 
-const addToCommand = new Command('addto')
+
+
+const addToCommand = new Command('add-to')
     .description('Add a valid value to an enum field');
 
 
@@ -50,6 +53,4 @@ addToCommand.argument('<dataset>', 'The dataset to which to the requested field 
     });
 
 
-
 export { addToCommand };
-

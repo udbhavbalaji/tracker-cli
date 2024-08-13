@@ -158,7 +158,16 @@ tracker show last <num-records> <dataset-name>
 
 Now, we can finally view our data form within the application. Initially, you should get an error stating that the dataset has no records, prompting you to the command that will add data to the dataset. If table appears to be overlapped, simply re-size the terminal window to fit the entire table.
 
-#### **v. Viewing the Application's Current Configuration**
+#### **v. Viewing the Relation Mappings of a specified dataset**
+
+```bash
+tracker show mappings <dataset-name>
+```
+
+If you want to view current mappings that have been configured for a dataset, you can use the above command, which displays all the mappings that have been currently configured for the dataset.
+
+
+#### **vi. Viewing the Application's Current Configuration**
 
 ```bash
 tracker show config

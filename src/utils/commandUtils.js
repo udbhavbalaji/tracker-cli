@@ -1,6 +1,7 @@
 import moment from "moment";
 import path from 'path';
 import fs from 'fs';
+
 import { checkPermissionError } from "./configUtils.js";
 import { confirmPrompt, initialDatasetFieldsPrompt, secondaryDatasetFieldsPrompt } from "./prompts.js";
 import { loadConfig } from "../config/config.js";
@@ -19,9 +20,6 @@ export async function getDatasetFields(numFields) {
             required: fieldAnswers.isRequired,
             param: fieldAnswers.paramName
         };
-
-        // should be done ; need to confirm
-        // todo: allow user to specify ONLY ONE 'date' field to be able to filter on, and save this in the field metadata
 
         if (!fieldAnswers.isRequired) {
             let defaultParam = `--${fieldAnswers.fieldName}`;

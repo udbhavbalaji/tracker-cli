@@ -1,6 +1,7 @@
 import os from 'os';
 import path from 'path';
 import fs from 'fs';
+
 import { configurePrompt } from '../utils/prompts.js';
 import { storeSudoUserInfo, createUserOwnedDirs, checkPermissionError } from '../utils/configUtils.js';
 

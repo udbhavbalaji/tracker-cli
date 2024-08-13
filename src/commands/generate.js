@@ -1,19 +1,22 @@
-import { Command } from "commander";
 import path from "path";
 import csv from 'csv-parser';
 import fs from 'fs';
-import { loadConfig } from "../config/config.js";
 import moment from "moment";
+import { Command } from "commander";
 import { createObjectCsvWriter } from "csv-writer";
+
+import { loadConfig } from "../config/config.js";
 import { capitalizeFirstLetter, getDateOneYearAgo, checkStartBeforeEnd, getDatasets, getTodaysDate, getFilterableDateField } from "../utils/commandUtils.js";
 import { inputDateValidator, inputEnumValidator } from "../utils/validators.js";
 
 
 const currentConfig = loadConfig();
 
+
 const generateCommand = new Command('generate')
     .description('Generates a filtered report based on optional filter arguments. By default, returns a report with transactions for the last year.');
 
+    
 function generateReport(dates, filename, fields=[]) {
     let results = [];
     let outputFileName = `Tracker ${capitalizeFirstLetter(filename)} Report`;

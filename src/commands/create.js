@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import path from 'path';
+
 import { loadConfig } from "../config/config.js";
 import { getDatasetFields, writeDatasets, checkEligibility, writeRelationships, getDatasets } from "../utils/commandUtils.js";
 import { confirmPrompt, relationFieldsPrompt } from "../utils/prompts.js";
@@ -9,6 +10,7 @@ const currentConfig = loadConfig();
 const createCommand = new Command('create')
     .description('Creates a new dataset.');
 
+    
 async function createDataset(name, numFields) {
     let datasetMetadata = {
         command: name,

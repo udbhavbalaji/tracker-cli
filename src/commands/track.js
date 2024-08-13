@@ -1,6 +1,7 @@
-import { Command } from "commander";
 import fs from 'fs';
+import { Command } from "commander";
 import { createObjectCsvWriter } from "csv-writer";
+
 import { getDatasets, getRelationships, getTodaysDate, addRelation, writeRelationships } from "../utils/commandUtils.js";
 import { loadConfig } from "../config/config.js";
 import { inputEnumValidator, inputNumberValidator, inputDateValidator } from "../utils/validators.js";

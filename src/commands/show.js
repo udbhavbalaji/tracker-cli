@@ -3,7 +3,7 @@ import csv from 'csv-parser';
 import { Command } from "commander";
 import { loadConfig } from "../config/config.js";
 import { getDatasets } from "../utils/commandUtils.js";
-import { inputDatasetValidator } from "../utils/validators.js";
+import { inputDatasetValidator, defaultNumberValidator } from "../utils/validators.js";
 
 
 const showCommand = new Command('show')
@@ -15,14 +15,35 @@ showCommand.command('config')
     .action(() => console.log(loadConfig()));
 
 
-// todo: need to add -i or info flag to get more detailed info about the datasets
 showCommand.command('datasets')
     .description("Shows the initialized datasets.")
-    .action(() => {
+    .option('-i, --info, [info]', 'Flag indicating to show info of fields in the dataset.', false)
+    .action((options) => {
         let datasets = getDatasets();
         console.log('');
         for (let i = 0; i < datasets.length; i++) {
-            console.log(datasets[i].command);
+            if (!options.info) {
+                console.log(datasets[i].command);
+                continue;
+            }
+            let numRecords = -1;
+            let numFields = datasets[i].fields.length;
+            const datasetPath = datasets[i].paths.dataset;
+            try {
+                let data = fs.readFileSync(datasetPath, 'utf-8');
+                let rows = data.split('\n');
+                numRecords = rows.filter((row) => row.trim() !== '').length - 1;
+            } catch (err) {
+                if (err.code === 'ENOENT') {
+                    numRecords = 0;
+                } else {
+                    throw err;
+                }
+            }
+            
+            console.log(`Dataset Name: ${datasets[i].command}`);
+            console.log(`Number of Fields: ${numFields}`);
+            console.log(`Number of Records: ${numRecords}`);
         }
         console.log('');
     });
@@ -87,8 +108,11 @@ showCommand.command('valid-values')
 
 showCommand.command('last')
     .description("Shows the last 'n' data points entered into the specified dataset.")
-    .argument('<num>', "Number of most recent data points you want to see.", (value) => {
-        if (value < 1) {
+    .argument('<num>', "Number of most recent data points you want to see. Use '_' to get the last 20 records.", (value) => {
+        if (value === '_') {
+            return 20;
+        }
+        if ((!defaultNumberValidator(value)) || (value < 1)) {
             console.error('Invalid num entered.');
             process.exit(1);
         }

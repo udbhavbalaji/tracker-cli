@@ -69,7 +69,7 @@ tracker -h
 
 If correctly installed, you should see something like this:
 
-![Initial App State](/documentation/initialAppState.png)
+![Initial App State](/documentation/images/initialAppState.png)
 
 Running the following command will help initialize the app. Since the config file is stored in the home directory, it requires explicit permission to create files and folders.
 
@@ -96,7 +96,7 @@ The default config looks something like this.
 
 After initialization, running the ```tracker -h``` once more will reveal the application's functional commands. You should see the following output.
 
-![Initialized App State](/documentation/initializedAppState.png)
+![Initialized App State](/documentation/images/initializedAppState.png)
 
 ## **Commands**
 

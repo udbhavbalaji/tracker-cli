@@ -2,7 +2,7 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { Command } from "commander";
 import { loadConfig } from "../config/config.js";
-import { getDatasets } from "../utils/commandUtils.js";
+import { getDatasets, getRelationships } from "../utils/commandUtils.js";
 import { inputDatasetValidator, defaultNumberValidator } from "../utils/validators.js";
 
 
@@ -144,6 +144,29 @@ showCommand.command('last')
                 console.table(requiredRecords.reverse());
             });
     });
+
+
+    showCommand.command('mappings')
+        .description("Shows the relation mappings that have been defined for a dataset.")
+        .argument('<dataset>', "Specify the dataset whose relation mappings you want to see.", (value) => inputDatasetValidator(value))
+        .action((dataset) => {
+            let datasets = getDatasets();
+            let reqDataset = datasets.find((item) => item.command === dataset);
+            let relations = getRelationships(reqDataset.paths.resources);
+            if (JSON.stringify(relations) === '{}') {
+                console.error("This dataset doesn't have a relation set up!");
+                process.exit(1);
+            }
+            let { many, one, values } = relations;
+            let relationMappings = [];
+            values.forEach((item) => { 
+                let mapping = {};
+                mapping[many] = item.many;
+                mapping[one] = item.one;
+                relationMappings.push(mapping);
+            });
+            console.table(relationMappings);
+        });
 
 
 export { showCommand };

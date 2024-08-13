@@ -15,6 +15,7 @@ showCommand.command('config')
     .action(() => console.log(loadConfig()));
 
 
+// todo: need to add -i or info flag to get more detailed info about the datasets
 showCommand.command('datasets')
     .description("Shows the initialized datasets.")
     .action(() => {
